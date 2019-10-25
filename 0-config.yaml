@@ -1,0 +1,4 @@
+---
+
+docker_container_name: "test-docker-and-ansible"
+docker_image_name: "image-test-docker-and-ansible"

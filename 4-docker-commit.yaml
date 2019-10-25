@@ -3,8 +3,8 @@
 - name: Create a snapshot image of the created container
   hosts: localhost
   vars_files:
-  - config.yaml
+  - 0-config.yaml
   run_once: true
   tasks:
     - name: Commit container
-      command: docker commit {{container_name}} {{image_name}}
+      command: docker commit {{docker_container_name}} {{docker_image_name}}

@@ -1,0 +1,10 @@
+
+- name: "Preconditions check: config.yaml validation"
+  hosts: localhost
+  vars_files:
+    - 0-config.yaml
+  tasks:
+    - assert: { that: "{{ item }} is defined" }
+      with_items:
+        - docker_container_name
+        - docker_image_name

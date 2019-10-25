@@ -2,10 +2,10 @@
 - name: Create Docker container
   hosts: localhost
   vars_files:
-    - config.yaml
+    - 0-config.yaml
   tasks:
-    - name: Detect if container '{{container_name}}' already available
-      shell: docker ps -f name="{{container_name}}" -q
+    - name: Detect if container '{{docker_container_name}}' already available
+      shell: docker ps -f name="{{docker_container_name}}" -q
       register: build_my_image_id
       # checking for docker images is harmless and can be done quickly and safely in check mode
       # and specififyin check_mode as "no" means we can run this whole playbook with the --check argument.
@@ -13,14 +13,14 @@
       changed_when: false
     - name: Make container
       docker_container:
-        name: "{{container_name}}"
+        name: "{{docker_container_name}}"
         image: ubuntu:xenial
         state: started
         command: tail -f /dev/null
       when: build_my_image_id.stdout == ""
-    - name: Tell Ansible how to work with '{{container_name}}' container
+    - name: Tell Ansible how to work with '{{docker_container_name}}' container
       changed_when: false
       add_host:
-        name: "{{container_name}}"
+        name: "{{docker_container_name}}"
         ansible_connection: docker
         ansible_ssh_user: root
