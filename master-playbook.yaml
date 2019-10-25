@@ -1,0 +1,34 @@
+---
+- name: Create container
+  hosts: localhost
+  tasks:
+    - name: Detect if container for building my-image already available
+      shell: docker ps -f name=test-docker-and-ansible -q
+      register: build_my_image_id
+      # checking for docker images is harmless and can be done quickly and safely in check mode
+      # and specififyin check_mode as "no" means we can run this whole playbook with the --check argument.
+      check_mode: no
+      changed_when: false
+    - name: Make container
+      docker_container:
+        name: "test-docker-and-ansible"
+        image: ubuntu:xenial
+        state: started
+        command: tail -f /dev/null
+      when: build_my_image_id.stdout == ""
+    - name: Tell Ansible how to work with our test-docker-and-ansible container
+      changed_when: false
+      add_host:
+        name: "test-docker-and-ansible"
+        ansible_connection: docker
+        ansible_ssh_user: root
+
+- import_playbook: docker-playbook.yml host=test-docker-and-ansible
+
+- name: Create a snapshot image of the created container
+  hosts: localhost
+  run_once: true
+  tasks:
+    - name: Commit container
+      command: docker commit "test-docker-and-ansible" "image-test-docker-and-ansible"
+
