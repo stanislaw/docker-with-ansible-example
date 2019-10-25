@@ -1,6 +1,6 @@
 # docker-playbook.yml
 ---
-- name: "Playbook: Provisioning a Docker container"
+- name: "Playbook: Provisioning Docker container"
   hosts: "{{ host | default('all') }}"
 
   module_defaults:
