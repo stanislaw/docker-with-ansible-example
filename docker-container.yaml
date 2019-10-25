@@ -1,6 +1,8 @@
 ---
 - name: Create Docker container
   hosts: localhost
+  vars_files:
+    - config.yaml
   tasks:
     - name: Detect if container '{{container_name}}' already available
       shell: docker ps -f name="{{container_name}}" -q

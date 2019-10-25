@@ -1,0 +1,5 @@
+---
+
+# https://github.com/ansible/ansible/issues/8603
+container_name: "test-docker-and-ansible"
+image_name: "image-test-docker-and-ansible"

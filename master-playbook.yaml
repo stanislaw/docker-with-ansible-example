@@ -4,22 +4,7 @@
 # https://tech.labs.oliverwyman.com/blog/2019/08/30/docker-without-dockerfiles/
 
 - hosts: localhost
-  vars:
-    # https://github.com/ansible/ansible/issues/8603
-    config_container_name: "test-docker-and-ansible"
-    config_image_name: "image-test-docker-and-ansible"
 
 - import_playbook: docker-container.yaml
-  vars:
-    container_name: 'test-docker-and-ansible'
-
 - import_playbook: docker-playbook.yaml
-  vars:
-    host: 'test-docker-and-ansible'
-
-- name: Create a snapshot image of the created container
-  hosts: localhost
-  run_once: true
-  tasks:
-    - name: Commit container
-      command: docker commit 'test-docker-and-ansible' 'image-test-docker-and-ansible'
+- import_playbook: docker-commit.yaml
