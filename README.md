@@ -3,6 +3,10 @@
 This example code is inspired by this article:
 [Docker without Dockerfiles](https://tech.labs.oliverwyman.com/blog/2019/08/30/docker-without-dockerfiles).
 
+## Requirements
+
+- Ansible >= 2.8
+
 ## Running
 
 ```
